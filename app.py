@@ -102,9 +102,9 @@ if "summary_shots" in filtered_df.columns:
     min_shots = st.sidebar.slider("Minimum shots", min_val, max_val, min_val)
     filtered_df = filtered_df[shots_numeric >= min_shots]
 
-row_limit = st.sidebar.selectbox("Rows to display", [25, 50, 100, 250, 500, 1000], index=2)
-
 ### --- WITHOUT PAGINATION ---------------------------------------------------------------------------------------------------
+# row_limit = st.sidebar.selectbox("Rows to display", [25, 50, 100, 250, 500, 1000], index=2)
+
 # st.write(f"Showing {min(len(filtered_df), row_limit):,} of {len(filtered_df):,} rows")
 
 # Option 1: Scrollable grid with limited visible rows, but inner scroll bar
