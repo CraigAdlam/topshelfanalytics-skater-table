@@ -43,28 +43,45 @@ if "birthDate" in df.columns:
 
 st.subheader("Skater Bios")
 
-st.sidebar.header("Filters")
 filtered_df = df.copy()
 
-# ---- Rows per page ----
-page_size = st.sidebar.selectbox("Rows per page", [10, 25, 50, 100], index=0, key="bios_page_size")
+# ---- Prep filter values ----
+has_team = "currentTeamAbbrev" in filtered_df.columns
+has_player = "skaterFullName" in filtered_df.columns
 
-# ---- Team Filter ----
-if "currentTeamAbbrev" in filtered_df.columns:
-    teams = sorted(filtered_df["currentTeamAbbrev"].dropna().astype(str).unique().tolist())
-    selected_teams = st.sidebar.multiselect("Team", teams, key="bios_team_filter")
-    if selected_teams:
-        filtered_df = filtered_df[
-            filtered_df["currentTeamAbbrev"].astype(str).isin(selected_teams)
-        ]
+# ---- Filters (main page area, not sidebar) ----
+filter_col1, filter_col2, filter_col3 = st.columns([1, 1.2, 1.5])
 
-# ---- Skater Filter ----
-if "skaterFullName" in filtered_df.columns:
-    search = st.sidebar.text_input("Search player", key="bios_search")
-    if search:
-        filtered_df = filtered_df[
-            filtered_df["skaterFullName"].astype(str).str.contains(search, case=False, na=False)
-        ]
+with filter_col1:
+    page_size = st.selectbox(
+        "Rows per page",
+        [10, 25, 50, 100],
+        index=0,
+        key="bios_page_size"
+    )
+
+with filter_col2:
+    if has_team:
+        teams = sorted(filtered_df["currentTeamAbbrev"].dropna().astype(str).unique().tolist())
+        selected_teams = st.multiselect(
+            "Team",
+            teams,
+            key="bios_team_filter"
+        )
+        if selected_teams:
+            filtered_df = filtered_df[
+                filtered_df["currentTeamAbbrev"].astype(str).isin(selected_teams)
+            ]
+
+with filter_col3:
+    if has_player:
+        search = st.text_input("Search player", key="bios_search")
+        if search:
+            filtered_df = filtered_df[
+                filtered_df["skaterFullName"].astype(str).str.contains(search, case=False, na=False)
+            ]
+
+st.divider()
 
 # ---- Pagination ----
 total_rows = len(filtered_df)
@@ -132,7 +149,7 @@ with col1:
 
 with col2:
     st.download_button(
-        "⬇️ Full",
+        "⬇️ Full Dataset",
         df.to_csv(index=False),
         "full_skater_bios.csv",
         "text/csv",

@@ -199,7 +199,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.download_button(
-        "Filtered",
+        "⬇️ Filtered",
         filtered_df.to_csv(index=False),
         "filtered_skater_data.csv",
         "text/csv",
@@ -208,7 +208,7 @@ with col1:
 
 with col2:
     st.download_button(
-        "Full Dataset",
+        "⬇️ Full Dataset",
         df.to_csv(index=False),
         "full_skater_data.csv",
         "text/csv",

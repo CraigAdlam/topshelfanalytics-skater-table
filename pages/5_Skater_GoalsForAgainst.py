@@ -33,38 +33,52 @@ desired_order = [
     "goals", "assists", "points", "evenStrengthGoalsFor",
     "evenStrengthGoalsAgainst", "evenStrengthGoalDifference",
     "evenStrengthGoalsForPct", "evenStrengthTimeOnIcePerGame",
-    "powerPlayGoalFor", "powerPlayGoalsAgainst", 
-    "powerPlayTimeOnIcePerGame", "shortHandedGoalsFor", 
-    "shortHandedGoalsAgainst", "shortHandedTimeOnIcePerGame", 
+    "powerPlayGoalFor", "powerPlayGoalsAgainst",
+    "powerPlayTimeOnIcePerGame", "shortHandedGoalsFor",
+    "shortHandedGoalsAgainst", "shortHandedTimeOnIcePerGame",
     "lastName"
 ]
 
 df = df[[col for col in desired_order if col in df.columns]]
 
-# ---- Date formatting ----
 if "gameDate" in df.columns:
     df["gameDate"] = pd.to_datetime(df["gameDate"], errors="coerce").dt.date
 
 st.subheader("Skater Goals For / Against")
 
-st.sidebar.header("Filters")
 filtered_df = df.copy()
 
-# ---- Date Filter ----
-if "gameDate" in filtered_df.columns:
+# ---- Prep filter values ----
+has_game_date = "gameDate" in filtered_df.columns
+has_team = "teamAbbrev" in filtered_df.columns
+has_player = "skaterFullName" in filtered_df.columns
+
+if has_game_date:
     min_date = filtered_df["gameDate"].min()
     max_date = filtered_df["gameDate"].max()
+else:
+    min_date = None
+    max_date = None
 
-    if pd.notna(min_date) and pd.notna(max_date):
-        date_mode = st.sidebar.radio(
+# ---- Filters (main page area, not sidebar) ----
+filter_col1, filter_col2, filter_col3 = st.columns([1.2, 1.4, 1])
+
+with filter_col1:
+    if has_game_date and pd.notna(min_date) and pd.notna(max_date):
+        date_mode = st.radio(
             "Game Date Filter Type",
             ["Single date", "Date range"],
             index=0,
-            key="gfa_date_mode"
+            key="gfa_date_mode",
+            horizontal=True
         )
+    else:
+        date_mode = None
 
+with filter_col2:
+    if has_game_date and pd.notna(min_date) and pd.notna(max_date):
         if date_mode == "Single date":
-            selected_date = st.sidebar.date_input(
+            selected_date = st.date_input(
                 "Game Date",
                 value=max_date,
                 min_value=min_date,
@@ -77,7 +91,7 @@ if "gameDate" in filtered_df.columns:
             ]
 
         else:
-            date_range = st.sidebar.date_input(
+            date_range = st.date_input(
                 "Game Date Range",
                 value=(min_date, max_date),
                 min_value=min_date,
@@ -93,34 +107,38 @@ if "gameDate" in filtered_df.columns:
                     filtered_df["gameDate"].between(start_date, end_date)
                 ]
 
-# ---- Rows per page ----
-page_size = st.sidebar.selectbox(
-    "Rows per page",
-    [10, 25, 50, 100],
-    index=0,
-    key="gfa_page_size"
-)
-
-# ---- Team Filter ----
-if "teamAbbrev" in filtered_df.columns:
-    teams = sorted(filtered_df["teamAbbrev"].dropna().astype(str).unique().tolist())
-    selected_teams = st.sidebar.multiselect(
-        "Team",
-        teams,
-        key="gfa_team_filter"
+with filter_col3:
+    page_size = st.selectbox(
+        "Rows per page",
+        [10, 25, 50, 100],
+        index=0,
+        key="gfa_page_size"
     )
-    if selected_teams:
-        filtered_df = filtered_df[
-            filtered_df["teamAbbrev"].astype(str).isin(selected_teams)
-        ]
 
-# ---- Player Search ----
-if "skaterFullName" in filtered_df.columns:
-    search = st.sidebar.text_input("Search player", key="gfa_search")
-    if search:
-        filtered_df = filtered_df[
-            filtered_df["skaterFullName"].astype(str).str.contains(search, case=False, na=False)
-        ]
+filter_col4, filter_col5 = st.columns([1, 1.5])
+
+with filter_col4:
+    if has_team:
+        teams = sorted(filtered_df["teamAbbrev"].dropna().astype(str).unique().tolist())
+        selected_teams = st.multiselect(
+            "Team",
+            teams,
+            key="gfa_team_filter"
+        )
+        if selected_teams:
+            filtered_df = filtered_df[
+                filtered_df["teamAbbrev"].astype(str).isin(selected_teams)
+            ]
+
+with filter_col5:
+    if has_player:
+        search = st.text_input("Search player", key="gfa_search")
+        if search:
+            filtered_df = filtered_df[
+                filtered_df["skaterFullName"].astype(str).str.contains(search, case=False, na=False)
+            ]
+
+st.divider()
 
 # ---- Pagination ----
 total_rows = len(filtered_df)
@@ -175,14 +193,13 @@ st.dataframe(
     height=table_height
 )
 
-# ---- Download Buttons ----
 st.markdown("### Download Options")
 
 col1, col2 = st.columns(2)
 
 with col1:
     st.download_button(
-        "Filtered",
+        "⬇️ Filtered",
         filtered_df.to_csv(index=False),
         "filtered_skater_goalsforagainst.csv",
         "text/csv",
@@ -191,7 +208,7 @@ with col1:
 
 with col2:
     st.download_button(
-        "Full Dataset",
+        "⬇️ Full Dataset",
         df.to_csv(index=False),
         "full_skater_goalsforagainst.csv",
         "text/csv",

@@ -6,8 +6,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-bios_page = st.Page("pages/1_Skater_Bios.py", title="Skater Bios")
-summary_page = st.Page("pages/2_Skater_Summary.py", title="Skater Summary")
+summary_page = st.Page("pages/1_Skater_Bios.py", title="Skater Bios")
+bios_page = st.Page("pages/2_Skater_Summary.py", title="Skater Summary")
 faceoff_pct_page = st.Page("pages/3_Skater_Faceoff_Percentages.py", title="Faceoff Percentages")
 faceoff_wins_page = st.Page("pages/4_Skater_Faceoff_Wins.py", title="Faceoff Wins")
 goals_for_against_page = st.Page("pages/5_Skater_GoalsForAgainst.py", title="Goals For / Against")
@@ -24,7 +24,8 @@ pg = st.navigation(
         penalties_page,
         penalty_kill_page,
     ],
-    position="top",
+    position="sidebar",
+    expanded=False,
 )
 
 pg.run()
