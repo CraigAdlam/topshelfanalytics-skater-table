@@ -94,7 +94,7 @@ if "gameDate" in filtered_df.columns:
                 
 # --- Row Limit OR Rows per page Filter ---
 # row_limit = st.sidebar.selectbox("Rows to display", [25, 50, 100, 250, 500, 1000], index=2)
-page_size = st.sidebar.selectbox("Rows per page", [10, 25, 50, 100], index=1)
+page_size = st.sidebar.selectbox("Rows per page", [10, 25, 50, 100], index=0)
 
 # ---- Team Filter ----
 if "teamAbbrev" in filtered_df.columns:
