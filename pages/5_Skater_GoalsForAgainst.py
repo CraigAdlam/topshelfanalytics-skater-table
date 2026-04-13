@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-CSV_PATH = BASE_DIR / "skater_goalsforagainst.csv"
+CSV_PATH = BASE_DIR / "skater_goalsForAgainst.csv"
 
 @st.cache_data
 def load_data(csv_path):
