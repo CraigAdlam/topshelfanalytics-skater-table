@@ -32,7 +32,7 @@ df = load_data()
 if "gameDate" in df.columns:
     df["gameDate"] = pd.to_datetime(df["gameDate"], errors="coerce").dt.normalize()
 
-st.title("Top Shelf Analytics")
+# st.title("Top Shelf Analytics")
 st.subheader("Skater Summary")
 
 st.sidebar.header("Filters")
