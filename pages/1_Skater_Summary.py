@@ -4,30 +4,30 @@ import pandas as pd
 
 st.set_page_config(page_title="Top Shelf Analytics", layout="wide")
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 CSV_PATH = BASE_DIR / "skater_summary.csv"
 
 @st.cache_data
-def load_data():
-    if not CSV_PATH.exists():
-        st.error(f"CSV not found: {CSV_PATH.name}")
+def load_data(csv_path):
+    if not csv_path.exists():
+        st.error(f"CSV not found: {csv_path.name}")
         st.stop()
 
-    file_size = CSV_PATH.stat().st_size
+    file_size = csv_path.stat().st_size
     if file_size == 0:
-        st.error(f"{CSV_PATH.name} is empty (0 bytes).")
+        st.error(f"{csv_path.name} is empty (0 bytes).")
         st.stop()
 
     try:
-        return pd.read_csv(CSV_PATH)
+        return pd.read_csv(csv_path)
     except pd.errors.EmptyDataError:
-        st.error(f"{CSV_PATH.name} was found, but pandas says it contains no readable data.")
+        st.error(f"{csv_path.name} was found, but pandas says it contains no readable data.")
         st.stop()
     except Exception as e:
-        st.error(f"Could not read {CSV_PATH.name}: {e}")
+        st.error(f"Could not read {csv_path.name}: {e}")
         st.stop()
 
-df = load_data()
+df = load_data(CSV_PATH)
 
 desired_order = [
     "gameDate", "gameId", "skaterFullName", "playerId", "homeRoad",
@@ -79,14 +79,14 @@ if "gameDate" in filtered_df.columns:
         else:
             date_range = st.sidebar.date_input(
                 "Game Date Range",
-                value=(min_date.date(), max_date.date()),
-                min_value=min_date.date(),
-                max_value=max_date.date()
+                value=(min_date, max_date),
+                min_value=min_date,
+                max_value=max_date
             )
 
             if len(date_range) == 2:
-                start_date = pd.to_datetime(date_range[0]).normalize()
-                end_date = pd.to_datetime(date_range[1]).normalize()
+                start_date = date_range[0]
+                end_date = date_range[1]
 
                 filtered_df = filtered_df[
                     filtered_df["gameDate"].between(start_date, end_date)
