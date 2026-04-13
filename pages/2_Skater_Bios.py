@@ -6,26 +6,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 CSV_PATH = BASE_DIR / "skater_bios.csv"
 
 @st.cache_data
-def load_data():
-    if not CSV_PATH.exists():
-        st.error(f"CSV not found: {CSV_PATH.name}")
+def load_data(csv_path):
+    if not csv_path.exists():
+        st.error(f"CSV not found: {csv_path.name}")
         st.stop()
 
-    file_size = CSV_PATH.stat().st_size
+    file_size = csv_path.stat().st_size
     if file_size == 0:
-        st.error(f"{CSV_PATH.name} is empty (0 bytes).")
+        st.error(f"{csv_path.name} is empty (0 bytes).")
         st.stop()
 
     try:
-        return pd.read_csv(CSV_PATH)
+        return pd.read_csv(csv_path)
     except pd.errors.EmptyDataError:
-        st.error(f"{CSV_PATH.name} was found, but pandas says it contains no readable data.")
+        st.error(f"{csv_path.name} contains no readable data.")
         st.stop()
     except Exception as e:
-        st.error(f"Could not read {CSV_PATH.name}: {e}")
+        st.error(f"Could not read {csv_path.name}: {e}")
         st.stop()
 
-df = load_data()
+df = load_data(CSV_PATH)
 
 desired_order = [
     "skaterFullName", "playerId", "height", "weight", "birthDate",

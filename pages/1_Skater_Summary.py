@@ -21,7 +21,7 @@ def load_data(csv_path):
     try:
         return pd.read_csv(csv_path)
     except pd.errors.EmptyDataError:
-        st.error(f"{csv_path.name} was found, but pandas says it contains no readable data.")
+        st.error(f"{csv_path.name} contains no readable data.")
         st.stop()
     except Exception as e:
         st.error(f"Could not read {csv_path.name}: {e}")
