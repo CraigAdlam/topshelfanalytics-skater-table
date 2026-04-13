@@ -105,7 +105,31 @@ if "summary_shots" in filtered_df.columns:
 row_limit = st.sidebar.selectbox("Rows to display", [25, 50, 100, 250, 500, 1000], index=2)
 
 st.write(f"Showing {min(len(filtered_df), row_limit):,} of {len(filtered_df):,} rows")
-st.dataframe(filtered_df.head(row_limit), use_container_width=True, hide_index=True)
+
+# Option 1: Scrollable grid with limited visible rows, but inner scroll bar
+# st.dataframe(filtered_df.head(row_limit), use_container_width=True, hide_index=True) # USE THIS IF PREFER THE SCROLLABLE GRID WITH LIMITED VISIBLE ROWS (COMMENT OUT THE SECTION BELOW) ---
+
+# Option 2: Increased table height (keeps performance + usability, but makes it feel much better on desktop)
+# st.dataframe(
+#     filtered_df.head(row_limit),
+#     use_container_width=True,
+#     hide_index=True,
+#     height=600
+# )
+
+# Option 3: Dynamic heigh (best UX)
+rows_shown = min(len(filtered_df), row_limit)
+table_height = min(1000, rows_shown * 35 + 40)
+
+st.dataframe(
+    filtered_df.head(row_limit),
+    use_container_width=True,
+    hide_index=True,
+    height=table_height
+)
+
+# Option 4: Remove scroll entirely
+# st.dataframe(filtered_df.head(row_limit), use_container_width=True, hide_index=True)
 
 st.download_button(
     "Download filtered data",
