@@ -104,9 +104,9 @@ if "summary_shots" in filtered_df.columns:
 
 row_limit = st.sidebar.selectbox("Rows to display", [25, 50, 100, 250, 500, 1000], index=2)
 
-st.write(f"Showing {min(len(filtered_df), row_limit):,} of {len(filtered_df):,} rows")
-
 ### --- WITHOUT PAGINATION ---------------------------------------------------------------------------------------------------
+# st.write(f"Showing {min(len(filtered_df), row_limit):,} of {len(filtered_df):,} rows")
+
 # Option 1: Scrollable grid with limited visible rows, but inner scroll bar
 # st.dataframe(filtered_df.head(row_limit), use_container_width=True, hide_index=True) # USE THIS IF PREFER THE SCROLLABLE GRID WITH LIMITED VISIBLE ROWS (COMMENT OUT THE SECTION BELOW) ---
 
