@@ -20,6 +20,7 @@ puck_possessions_page = st.Page("pages/11_Skater_PuckPossessions.py", title="Puc
 realtime_page = st.Page("pages/12_Skater_Realtime.py", title="Realtime")
 scoring_per_game_page = st.Page("pages/13_Skater_ScoringPerGame.py", title="Scoring Per Game")
 scoring_rates_page = st.Page("pages/14_Skater_ScoringRates.py", title="Scoring Rates")
+shootout_page = st.Page("pages/15_Skater_Shootout.py", title="Shootout")
 
 pg = st.navigation(
     [
@@ -37,6 +38,7 @@ pg = st.navigation(
         realtime_page,
         scoring_per_game_page,
         scoring_rates_page,
+        shootout_page,
     ],
     position="sidebar",
     expanded=False,
