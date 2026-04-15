@@ -29,15 +29,15 @@ df = load_data(CSV_PATH)
 
 desired_order = [
     "gameDate", "gameId", "skaterFullName", "playerId", "homeRoad",
-    "teamAbbrev", "opponentTeamAbbrev", "positionCode", "gamesPlayed",
+    "teamAbbrev", "opponentTeamAbbrev", "positionCode", "gamesPlayed", 
     "totalFaceoffs", "totalFaceoffWins", "totalFaceoffLosses",
     "faceoffWinPct", "evFaceoffs", "evFaceoffsWon", "evFaceoffsLost",
-    "ppFaceoffs", "ppFaceoffsWon", "ppFaceoffsLost", "shFaceoffs",
-    "shFaceoffsWon", "shFaceoffsLost", "defensiveZoneFaceoffs",
-    "defensiveZoneFaceoffWins", "defensiveZoneFaceoffLosses",
+    "ppFaceoffs", "ppFaceoffsWon", "ppFaceoffsLost", "shFaceoffs", 
+    "shFaceoffsWon", "shFaceoffsLost", "offensiveZoneFaceoffs", 
+    "offensiveZoneFaceoffWins", "offensiveZoneFaceoffLosses", 
     "neutralZoneFaceoffs", "neutralZoneFaceoffWins",
-    "neutralZoneFaceoffLosses", "offensiveZoneFaceoffs",
-    "offensiveZoneFaceoffWins", "offensiveZoneFaceoffLosses",
+    "neutralZoneFaceoffLosses", "defensiveZoneFaceoffs", 
+    "defensiveZoneFaceoffWins", "defensiveZoneFaceoffLosses",
     "lastName"
 ]
 
