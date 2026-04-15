@@ -22,6 +22,7 @@ scoring_per_game_page = st.Page("pages/13_Skater_ScoringPerGame.py", title="Scor
 scoring_rates_page = st.Page("pages/14_Skater_ScoringRates.py", title="Scoring Rates")
 shootout_page = st.Page("pages/15_Skater_Shootout.py", title="Shootout")
 shot_type_page = st.Page("pages/16_Skater_ShotType.py", title="Shot Type")
+summary_shooting_page = st.Page("pages/17_Skater_SummaryShooting.py", title="Summary Shooting")
 
 pg = st.navigation(
     [
@@ -41,6 +42,7 @@ pg = st.navigation(
         scoring_rates_page,
         shootout_page,
         shot_type_page,
+        summary_shooting_page,
     ],
     position="sidebar",
     expanded=False,
