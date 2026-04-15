@@ -15,6 +15,7 @@ penalties_page = st.Page("pages/6_Skater_Penalties.py", title="Penalties")
 penalty_kill_page = st.Page("pages/7_Skater_PenaltyKill.py", title="Penalty Kill")
 penalty_shots_page = st.Page("pages/8_Skater_PenaltyShots.py", title="Penalty Shots")
 percentages_page = st.Page("pages/9_Skater_Percentages.py", title="Percentages")
+powerplay_page = st.Page("pages/10_Skater_Powerplay.py", title="Power Play")
 
 pg = st.navigation(
     [
@@ -27,6 +28,7 @@ pg = st.navigation(
         penalty_kill_page,
         penalty_shots_page,
         percentages_page,
+        powerplay_page,
     ],
     position="sidebar",
     expanded=False,
