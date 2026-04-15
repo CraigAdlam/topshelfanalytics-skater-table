@@ -30,12 +30,12 @@ df = load_data(CSV_PATH)
 desired_order = [
     "gameDate", "gameId", "skaterFullName", "playerId", "homeRoad",
     "teamAbbrev", "opponentTeamAbbrev", "positionCode", "gamesPlayed",
-    "shGoals", "shAssists", "shPoints", "shPrimaryAssists",
-    "shSecondaryAssists", "shShots", "shShootingPct",
-    "shIndividualSatFor", "shGoalsPer60", "ppGoalsAgainstPer60",
-    "shPrimaryAssistsPer60", "shSecondaryAssistsPer60", "shPointsPer60",
-    "shShotsPer60", "shIndividualSatForPer60", "shTimeOnIce",
-    "shTimeOnIcePerGame", "shTimeOnIcePctPerGame", "lastName"
+    "shGoals", "shAssists", "shPrimaryAssists", "shSecondaryAssists",
+    "shPoints", "shIndividualSatFor", "shShots", "shShootingPct", 
+    "shGoalsPer60", "shPrimaryAssistsPer60", "shSecondaryAssistsPer60",
+    "shPointsPer60", "shIndividualSatForPer60", "shShotsPer60",
+    "ppGoalsAgainstPer60", "shTimeOnIce", "shTimeOnIcePerGame", 
+    "shTimeOnIcePctPerGame", "lastName"
 ]
 
 df = df[[col for col in desired_order if col in df.columns]]
