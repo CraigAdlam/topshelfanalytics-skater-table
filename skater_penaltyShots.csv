@@ -1,4 +1,4 @@
-gameDate,gameId,skaterFullName,playerId,homeRoad,teamAbbrev,opponentTeamAbbrev,shootsCatches,positionCode,penaltyShotAttempts,penaltyShotsGoals,penaltyShotsFailed,penaltyShotShootingPct,lastName
+﻿gameDate,gameId,skaterFullName,playerId,homeRoad,teamAbbrev,opponentTeamAbbrev,shootsCatches,positionCode,penaltyShotAttempts,penaltyShotsGoals,penaltyShotsFailed,penaltyShotShootingPct,lastName
 2025-10-18,2025020077,Shane Pinto,8481596,H,OTT,NYI,R,C,1,0,1,0.0,Pinto
 2025-11-01,2025020182,Kyle Connor,8478398,H,WPG,PIT,L,L,1,1,0,1.0,Connor
 2025-11-01,2025020192,Vasily Podkolzin,8481617,H,EDM,CHI,L,R,1,0,1,0.0,Podkolzin

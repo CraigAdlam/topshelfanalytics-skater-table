@@ -1,4 +1,4 @@
-gameDate,gameId,skaterFullName,playerId,homeRoad,teamAbbrev,opponentTeamAbbrev,shootsCatches,positionCode,shootoutGamesPlayed,shootoutGoals,shootoutShots,shootoutShootingPct,shootoutGameDecidingGoals,careerShootoutGamesPlayed,careerShootoutGoals,careerShootoutShots,careerShootoutShootingPct,careerShootoutGameDecidingGoals,lastName
+﻿gameDate,gameId,skaterFullName,playerId,homeRoad,teamAbbrev,opponentTeamAbbrev,shootsCatches,positionCode,shootoutGamesPlayed,shootoutGoals,shootoutShots,shootoutShootingPct,shootoutGameDecidingGoals,careerShootoutGamesPlayed,careerShootoutGoals,careerShootoutShots,careerShootoutShootingPct,careerShootoutGameDecidingGoals,lastName
 2025-10-07,2025020001,Anton Lundell,8482113,H,FLA,CHI,L,C,0,0,0,,0,18,8,17,0.47058,3,Lundell
 2025-10-07,2025020002,Parker Wotherspoon,8478450,R,PIT,NYR,L,D,0,0,0,,0,0,0,0,,0,Wotherspoon
 2025-10-07,2025020003,Samuel Girard,8479398,R,COL,LAK,L,D,0,0,0,,0,0,0,0,,0,Girard
