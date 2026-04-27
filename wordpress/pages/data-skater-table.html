@@ -1,6 +1,10 @@
 <link href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
 
+<div class="tsa-helper-text">
+  Browse datasets and advanced stats using the menu below.
+</div>
+
 <div id="tsa-table-wrap">
 
   <div class="tsa-layout">
@@ -648,6 +652,18 @@ input[type="date"] {
   background: #f4f7fa;
 }
 
+.tsa-helper-text{
+  font-size:14px;
+  line-height:1.45;
+  color:#5b6470;
+  margin-bottom:10px;
+  padding:8px 12px;
+  background:#f8fafc;
+  border:1px solid #d9e1ea;
+  border-radius:8px;
+  font-weight:500;
+}
+
 @media (max-width: 1000px) {
   #tsa-table-wrap {
     overflow-x: hidden;
@@ -731,6 +747,18 @@ input[type="date"] {
 
   #tsa-table {
     overflow-x: auto;
+  }
+  .tsa-helper-text{
+    font-size:14px;
+    line-height:1.45;
+    color:#4b5563;
+    margin-bottom:10px;
+    padding:8px 12px;
+    background:#f8fafc;
+    border:1px solid #d9e1ea;
+    border-radius:8px;
+    font-weight:500;
+    text-align:left;
   }
 }
 </style>
