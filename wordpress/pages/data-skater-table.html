@@ -52,6 +52,10 @@
         <button class="tsa-dataset-btn" data-dataset="puckpossessions" data-endpoint="/wp-json/tsa/v1/skater-puckpossessions">
           Puck Possessions
         </button>
+		
+        <button class="tsa-dataset-btn" data-dataset="realtime" data-endpoint="/wp-json/tsa/v1/skater-realtime">
+          Realtime
+        </button>
       </div>
     </aside>
 
@@ -170,7 +174,11 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentEndpoint = "/wp-json/tsa/v1/skater-bios";
   let currentDataset = "bios";
 
-  const datedDatasets = ["summary", "faceoffpercentages", "faceoffwins", "goalsforagainst", "penalties", "penaltykill", "penaltyshots", "percentages", "powerplay", "puckpossessions"];
+  const datedDatasets = [
+    "summary", "faceoffpercentages", "faceoffwins", "goalsforagainst", "penalties",
+	"penaltykill", "penaltyshots", "percentages", "powerplay", "puckpossessions",
+	"realtime"
+  ];
 
   let defaultStartDate = "";
   let defaultEndDate = "";
