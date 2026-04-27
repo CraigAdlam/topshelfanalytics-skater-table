@@ -1,0 +1,33 @@
+﻿teamId,teamFullName,teamAbbrev,logoURL
+24,Anaheim Ducks,ANA,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/ANA_light.png
+6,Boston Bruins,BOS,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/BOS_light.png
+7,Buffalo Sabres,BUF,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/BUF_light.png
+12,Carolina Hurricanes,CAR,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/CAR_light.png
+29,Columbus Blue Jackets,CBJ,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/CBJ_light.png
+20,Calgary Flames,CGY,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/CGY_light.png
+16,Chicago Blackhawks,CHI,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/CHI_light.png
+21,Colorado Avalanche,COL,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/COL_light.png
+25,Dallas Stars,DAL,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/DAL_light.png
+17,Detroit Red Wings,DET,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/DET_light.png
+22,Edmonton Oilers,EDM,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/EDM_light.png
+13,Florida Panthers,FLA,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/FLA_light.png
+26,Los Angeles Kings,LAK,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/LAK_light.png
+30,Minnesota Wild,MIN,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/MIN_light.png
+8,Montréal Canadiens,MTL,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/MTL_light.png
+1,New Jersey Devils,NJD,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/NJD_light.png
+18,Nashville Predators,NSH,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/NSH_light.png
+2,New York Islanders,NYI,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/NYI_light.png
+3,New York Rangers,NYR,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/NYR_light.png
+9,Ottawa Senators,OTT,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/OTT_light.png
+4,Philadelphia Flyers,PHI,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/PHI_light.png
+5,Pittsburgh Penguins,PIT,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/PIT_light.png
+55,Seattle Kraken,SEA,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/SEA_light.png
+28,San Jose Sharks,SJS,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/SJS_light.png
+19,St. Louis Blues,STL,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/STL_light.png
+14,Tampa Bay Lightning,TBL,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/TBL_light.png
+10,Toronto Maple Leafs,TOR,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/TOR_light.png
+68,Utah Mammoth,UTA,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/UTA_light.png
+23,Vancouver Canucks,VAN,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/VAN_light.png
+54,Vegas Golden Knights,VGK,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/VGK_light.png
+52,Winnipeg Jets,WPG,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/WPG_light.png
+15,Washington Capitals,WSH,https://raw.githubusercontent.com/CraigAdlam/API_NHL_assets/refs/heads/main/PNGs/WSH_light.png
