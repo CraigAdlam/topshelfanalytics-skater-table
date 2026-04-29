@@ -185,7 +185,9 @@
         <button id="tsa-download-full" type="button">⬇ Download Full CSV</button>
       </div>
 
-      <div id="tsa-debug">Starting...</div>
+	  <div id="tsa-status" class="tsa-status loading">
+	    Loading dataset...
+	  </div>
       <div id="tsa-table"></div>
 
     </main>
@@ -197,7 +199,12 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const debug = document.getElementById("tsa-debug");
+  const statusBox = document.getElementById("tsa-status");
+
+  function setStatus(message, type = "info") {
+    statusBox.textContent = message;
+    statusBox.className = "tsa-status " + type;
+  }
 
   let currentEndpoint = "/wp-json/tsa/v1/skater-bios";
   let currentDataset = "bios";
@@ -268,14 +275,27 @@ document.addEventListener("DOMContentLoaded", function () {
     layout: "fitDataStretch",
     autoColumns: true,
 
-    ajaxResponse: function(url, params, response) {
-      debug.innerHTML = "Rows found: " + response.total;
-      return response;
-    }
+	ajaxResponse: function(url, params, response) {
+	  const total = Number(response.total || 0);
+
+	  if (total === 0) {
+		setStatus("No rows match your current filters.", "empty");
+	  } else {
+		setStatus("Rows found: " + total.toLocaleString(), "success");
+	  }
+
+	  return response;
+	},
+	ajaxError: function() {
+	  setStatus("Dataset failed to load. Please refresh the page or try another dataset.", "error");
+	}
   });
 
   function refreshTable() {
     clearTimeout(tsaFilterTimer);
+
+    setStatus("Loading dataset...", "loading");
+
     tsaFilterTimer = setTimeout(function () {
       table.setPage(1);
       table.setData(currentEndpoint);
@@ -606,7 +626,7 @@ input[type="date"] {
   cursor: pointer;
 }
 
-#tsa-debug {
+.tsa-status {
   margin: 0 0 12px 0;
   padding: 10px 12px;
   border: 1px solid #d9e1ea;
@@ -615,6 +635,28 @@ input[type="date"] {
   background: #f8fafc;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+.tsa-status.loading {
+  color: #4b5563;
+}
+
+.tsa-status.success {
+  color: #166534;
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.tsa-status.empty {
+  color: #92400e;
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.tsa-status.error {
+  color: #991b1b;
+  background: #fef2f2;
+  border-color: #fecaca;
 }
 
 #tsa-table {
