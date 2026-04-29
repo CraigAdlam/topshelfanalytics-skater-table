@@ -160,20 +160,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_summary_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_summary';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_summary');
 }
 
 add_action('rest_api_init', function () {
@@ -673,20 +660,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_faceoffpercentages_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_faceoffpercentages';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_faceoffpercentages');
 }
 
 add_action('rest_api_init', function () {
@@ -981,20 +955,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_faceoffwins_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_faceoffwins';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_faceoffwins');
 }
 
 add_action('rest_api_init', function () {
@@ -1281,20 +1242,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_goalsforagainst_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_goalsforagainst';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_goalsforagainst');
 }
 
 add_action('rest_api_init', function () {
@@ -1585,20 +1533,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_penalties_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_penalties';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_penalties');
 }
 
 add_action('rest_api_init', function () {
@@ -1889,20 +1824,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_penaltykill_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_penaltykill';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_penaltykill');
 }
 
 add_action('rest_api_init', function () {
@@ -2179,20 +2101,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_penaltyshots_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_penaltyshots';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_penaltyshots');
 }
 
 add_action('rest_api_init', function () {
@@ -2483,20 +2392,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_percentages_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_percentages';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_percentages');
 }
 
 add_action('rest_api_init', function () {
@@ -2787,20 +2683,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_powerplay_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_powerplay';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_powerplay');
 }
 
 add_action('rest_api_init', function () {
@@ -3087,20 +2970,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_puckpossessions_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_puckpossessions';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_puckpossessions');
 }
 
 add_action('rest_api_init', function () {
@@ -3397,20 +3267,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_realtime_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_realtime';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_realtime');
 }
 
 add_action('rest_api_init', function () {
@@ -3704,20 +3561,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_scoringpergame_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_scoringpergame';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_scoringpergame');
 }
 
 add_action('rest_api_init', function () {
@@ -4007,20 +3851,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_scoringrates_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_scoringrates';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_scoringrates');
 }
 
 add_action('rest_api_init', function () {
@@ -4303,20 +4134,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_shootout_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_shootout';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_shootout');
 }
 
 add_action('rest_api_init', function () {
@@ -4623,20 +4441,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_shottype_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_shottype';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_shottype');
 }
 
 add_action('rest_api_init', function () {
@@ -4926,20 +4731,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_summaryshooting_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_summaryshooting';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_summaryshooting');
 }
 
 add_action('rest_api_init', function () {
@@ -5226,20 +5018,7 @@ add_action('rest_api_init', function () {
 });
 
 function tsa_get_skater_timeonice_meta($request) {
-    global $wpdb;
-	
-	$wpdb->query("SET NAMES utf8mb4");
-	$wpdb->query("SET CHARACTER SET utf8mb4");
-
-    $table = $wpdb->prefix . 'tsa_skater_timeonice';
-
-    $min_date = $wpdb->get_var("SELECT MIN(gameDate) FROM $table");
-    $max_date = $wpdb->get_var("SELECT MAX(gameDate) FROM $table");
-
-    return [
-        'min_date' => $min_date,
-        'max_date' => $max_date,
-    ];
+    return tsa_get_skater_date_meta_for_table('tsa_skater_timeonice');
 }
 
 add_action('rest_api_init', function () {
@@ -5385,5 +5164,25 @@ function tsa_get_skater_team_options($request) {
     return [
         'teams' => $teams,
         'opponents' => $teams
+    ];
+}
+
+function tsa_set_utf8mb4() {
+    global $wpdb;
+
+    $wpdb->query("SET NAMES utf8mb4");
+    $wpdb->query("SET CHARACTER SET utf8mb4");
+}
+
+function tsa_get_skater_date_meta_for_table($table_name) {
+    global $wpdb;
+
+    tsa_set_utf8mb4();
+
+    $table = $wpdb->prefix . $table_name;
+
+    return [
+        'min_date' => $wpdb->get_var("SELECT MIN(gameDate) FROM $table"),
+        'max_date' => $wpdb->get_var("SELECT MAX(gameDate) FROM $table"),
     ];
 }
