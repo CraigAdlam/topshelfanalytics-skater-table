@@ -2958,7 +2958,6 @@ function tsa_get_skater_shottype($request) {
     $teams_raw = sanitize_text_field($request->get_param('teams'));
 	$opponents_raw = sanitize_text_field($request->get_param('opponents'));
 	$homeRoad = sanitize_text_field($request->get_param('homeRoad'));
-	$positionCode = sanitize_text_field($request->get_param('positionCode'));
     $search = sanitize_text_field($request->get_param('search'));
     $date_single = sanitize_text_field($request->get_param('date_single'));
     $date_start = sanitize_text_field($request->get_param('date_start'));
@@ -2994,10 +2993,7 @@ function tsa_get_skater_shottype($request) {
 		$params[] = $homeRoad;
 	}
 	
-	if (!empty($positionCode)) {
-		$where[] = "positionCode = %s";
-		$params[] = $positionCode;
-	}
+	// Shot Type table does not include positionCode, so position filtering is skipped.
 
     if (!empty($search)) {
         $like = '%' . $wpdb->esc_like($search) . '%';
@@ -3148,7 +3144,9 @@ function tsa_download_skater_shottype_csv($request) {
     return tsa_stream_skater_csv_for_table(
         $request,
         'tsa_skater_shottype',
-        'skater_shottype'
+        'skater_shottype',
+        false,
+        false
     );
 }
 
@@ -3612,7 +3610,7 @@ function tsa_get_skater_date_meta_for_table($table_name) {
     ];
 }
 
-function tsa_stream_skater_csv_for_table($request, $table_name, $filename_base, $is_bios = false) {
+function tsa_stream_skater_csv_for_table($request, $table_name, $filename_base, $is_bios = false, $has_position = true) {
     global $wpdb;
 
     tsa_set_utf8mb4();
@@ -3661,10 +3659,10 @@ function tsa_stream_skater_csv_for_table($request, $table_name, $filename_base, 
             $params[] = $homeRoad;
         }
 
-        if (!empty($positionCode)) {
-            $where[] = "positionCode = %s";
-            $params[] = $positionCode;
-        }
+		if ($has_position && !empty($positionCode)) {
+			$where[] = "positionCode = %s";
+			$params[] = $positionCode;
+		}
 
         if (!empty($search)) {
             $like = '%' . $wpdb->esc_like($search) . '%';

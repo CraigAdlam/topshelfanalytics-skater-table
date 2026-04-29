@@ -43,6 +43,13 @@ document.addEventListener("DOMContentLoaded", function () {
 	"realtime", "scoringpergame", "scoringrates", "shootout", "shottype",
 	"summaryshooting", "timeonice"
   ];
+  
+  const positionDatasets = [
+    "bios", "summary", "faceoffpercentages", "faceoffwins", "goalsforagainst",
+    "penalties", "penaltykill", "penaltyshots", "percentages", "powerplay",
+    "puckpossessions", "realtime", "scoringpergame", "scoringrates",
+    "shootout", "summaryshooting", "timeonice"
+  ];
 
   let defaultStartDate = "";
   let defaultEndDate = "";
@@ -91,6 +98,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function datasetHasDates() {
     return datedDatasets.includes(currentDataset);
   }
+  
+  function datasetHasPosition() {
+    return positionDatasets.includes(currentDataset);
+  }
 
   function getMetaEndpoint() {
     return `/wp-json/tsa/v1/skater-${currentDataset}-meta`;
@@ -113,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
         teams: teamSelect.getValue().join(","),
         opponents: hasDates ? opponentSelect.getValue().join(",") : "",
         homeRoad: hasDates ? document.getElementById("tsa-homeroad-filter").value : "",
-        positionCode: document.getElementById("tsa-position-filter").value,
+        positionCode: datasetHasPosition() ? document.getElementById("tsa-position-filter").value : "",
         date_single: hasDates && mode === "single" ? document.getElementById("tsa-date-single").value : "",
         date_start: hasDates && mode === "range" ? document.getElementById("tsa-date-start").value : "",
         date_end: hasDates && mode === "range" ? document.getElementById("tsa-date-end").value : ""
@@ -172,6 +183,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateDatasetUI() {
     const hasDates = datasetHasDates();
+	
+	document.getElementById("tsa-position-filter").closest(".tsa-field").style.display =
+	  datasetHasPosition() ? "block" : "none";
+	  
+	if (!datasetHasPosition()) {
+	  document.getElementById("tsa-position-filter").value = "";
+	}
 
     document.querySelector(".tsa-date-mode-field").style.display = hasDates ? "block" : "none";
     document.getElementById("tsa-opponent-field").style.display = hasDates ? "block" : "none";
@@ -262,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
       teams: teamSelect.getValue().join(","),
       opponents: hasDates ? opponentSelect.getValue().join(",") : "",
       homeRoad: hasDates ? document.getElementById("tsa-homeroad-filter").value : "",
-      positionCode: document.getElementById("tsa-position-filter").value,
+      positionCode: datasetHasPosition() ? document.getElementById("tsa-position-filter").value : "",
       date_single: hasDates && mode === "single" ? document.getElementById("tsa-date-single").value : "",
       date_start: hasDates && mode === "range" ? document.getElementById("tsa-date-start").value : "",
       date_end: hasDates && mode === "range" ? document.getElementById("tsa-date-end").value : ""
