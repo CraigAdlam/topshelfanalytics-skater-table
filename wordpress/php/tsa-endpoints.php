@@ -3818,7 +3818,7 @@ function tsa_get_team_dataset($request, $dataset) {
 
         if (!empty($teams)) {
             $placeholders = implode(',', array_fill(0, count($teams), '%s'));
-            $where[] = "teamFullName IN ($placeholders)";
+            $where[] = "teamAbbrev IN ($placeholders)";
 
             foreach ($teams as $team) {
                 $params[] = $team;
@@ -3844,11 +3844,21 @@ function tsa_get_team_dataset($request, $dataset) {
         $params[] = $homeRoad;
     }
 
-    if (!empty($search)) {
-        $like = '%' . $wpdb->esc_like($search) . '%';
-        $where[] = "teamFullName LIKE %s";
-        $params[] = $like;
-    }
+	if (!empty($search)) {
+		$search = trim($search);
+		$upper_search = strtoupper($search);
+
+		if (strlen($search) <= 3) {
+			$like = $wpdb->esc_like($upper_search) . '%';
+			$where[] = "teamAbbrev LIKE %s";
+			$params[] = $like;
+		} else {
+			$like = '%' . $wpdb->esc_like($search) . '%';
+			$where[] = "(teamAbbrev LIKE %s OR teamFullName LIKE %s)";
+			$params[] = $like;
+			$params[] = $like;
+		}
+	}
 
     if (!empty($date_single)) {
         $where[] = "gameDate = %s";
@@ -3951,10 +3961,10 @@ function tsa_get_team_team_options($request) {
     $summary_table = $wpdb->prefix . 'tsa_team_summary';
 
     $teams = $wpdb->get_col("
-        SELECT DISTINCT teamFullName
+        SELECT DISTINCT teamAbbrev
         FROM `$summary_table`
-        WHERE teamFullName <> ''
-        ORDER BY teamFullName
+        WHERE teamAbbrev <> ''
+        ORDER BY teamAbbrev
     ");
 
     $opponents = $wpdb->get_col("
@@ -4001,7 +4011,7 @@ function tsa_stream_team_csv($request, $dataset) {
 
             if (!empty($teams)) {
                 $placeholders = implode(',', array_fill(0, count($teams), '%s'));
-                $where[] = "teamFullName IN ($placeholders)";
+                $where[] = "teamAbbrev IN ($placeholders)";
 
                 foreach ($teams as $team) {
                     $params[] = $team;
@@ -4027,11 +4037,21 @@ function tsa_stream_team_csv($request, $dataset) {
             $params[] = $homeRoad;
         }
 
-        if (!empty($search)) {
-            $like = '%' . $wpdb->esc_like($search) . '%';
-            $where[] = "teamFullName LIKE %s";
-            $params[] = $like;
-        }
+		if (!empty($search)) {
+			$search = trim($search);
+			$upper_search = strtoupper($search);
+
+			if (strlen($search) <= 3) {
+				$like = $wpdb->esc_like($upper_search) . '%';
+				$where[] = "teamAbbrev LIKE %s";
+				$params[] = $like;
+			} else {
+				$like = '%' . $wpdb->esc_like($search) . '%';
+				$where[] = "(teamAbbrev LIKE %s OR teamFullName LIKE %s)";
+				$params[] = $like;
+				$params[] = $like;
+			}
+		}
 
         if (!empty($date_single)) {
             $where[] = "gameDate = %s";
