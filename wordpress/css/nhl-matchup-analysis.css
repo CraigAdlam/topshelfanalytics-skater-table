@@ -1,0 +1,31 @@
+.cell-green {
+  background: #16a34a !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.cell-red {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.cell-blue-light {
+  background: #bfdbfe !important;
+}
+
+.cell-blue-strong {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.cell-red-light {
+  background: #fecaca !important;
+}
+
+.cell-red-strong {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}

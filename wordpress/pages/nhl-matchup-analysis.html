@@ -1,0 +1,30 @@
+<link href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator.min.css" rel="stylesheet">
+
+<div id="tsa-table-wrap">
+
+  <!-- Top nav (reuse) -->
+  <nav class="tsa-data-tabs">
+    <a href="/nhl-data-hub/">Data Hub</a>
+    <a href="/data-skater-table/">Skater Data</a>
+    <a href="/data-team-table/">Team Data</a>
+    <a href="/data-shot-events-table/">Shot Events</a>
+    <a class="active" href="/nhl-matchup-analysis/">Matchup Analysis</a>
+  </nav>
+
+  <div class="tsa-helper-text">
+    Daily NHL matchup insights based on shot-based performance metrics.
+  </div>
+
+  <div id="tsa-last-updated" class="tsa-last-updated">
+    Matchup analysis updated: Loading...
+  </div>
+
+  <div id="tsa-status" class="tsa-status loading">
+    Loading matchup analysis...
+  </div>
+
+  <div id="tsa-table"></div>
+
+</div>
+
+<script src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>

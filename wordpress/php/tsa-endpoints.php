@@ -4875,3 +4875,24 @@ function tsa_get_goalie_team_options($request) {
         'opponents' => $teams,
     ];
 }
+
+
+
+add_action('rest_api_init', function () {
+    register_rest_route('tsa/v1', '/matchup-analysis', [
+        'methods' => 'GET',
+        'callback' => 'tsa_get_matchup_analysis',
+        'permission_callback' => '__return_true',
+    ]);
+});
+
+function tsa_get_matchup_analysis() {
+    global $wpdb;
+
+    $table = $wpdb->prefix . 'tsa_matchup_analysis_preview';
+
+    return $wpdb->get_results(
+        "SELECT * FROM $table ORDER BY sortId ASC, gameId ASC",
+        ARRAY_A
+    );
+}

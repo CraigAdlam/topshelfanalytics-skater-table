@@ -1,0 +1,38 @@
+DROP TABLE IF EXISTS wp_tsa_matchup_analysis_preview;
+
+CREATE TABLE wp_tsa_matchup_analysis_preview (
+  predictionDate DATE,
+  gameDate DATE,
+  gameId BIGINT,
+  sortId INT,
+
+  roadTeams VARCHAR(10),
+  roadTeamId BIGINT,
+  road_net DECIMAL(10,4),
+  road_sf_pct_diff DECIMAL(10,6),
+  road_sa_pct_diff DECIMAL(10,6),
+
+  overUnder DECIMAL(5,2),
+
+  homeTeams VARCHAR(10),
+  homeTeamId BIGINT,
+  home_sf_pct_diff DECIMAL(10,6),
+  home_sa_pct_diff DECIMAL(10,6),
+  home_net DECIMAL(10,4),
+
+  roadML INT,
+  homeML INT,
+
+  road_games_in_split INT,
+  home_games_in_split INT,
+
+  road_net_class VARCHAR(50),
+  road_sf_class VARCHAR(50),
+  road_sa_class VARCHAR(50),
+  home_net_class VARCHAR(50),
+  home_sf_class VARCHAR(50),
+  home_sa_class VARCHAR(50)
+);
+
+DELETE FROM wp_tsa_matchup_analysis_preview
+WHERE roadTeams = 'roadTeams';
