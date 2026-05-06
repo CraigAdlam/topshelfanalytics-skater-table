@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   new Tabulator("#tsa-table", {
     ajaxURL: "/wp-json/tsa/v1/matchup-analysis",
-    layout: "fitColumns",
+    layout: window.innerWidth <= 768 ? "fitDataStretch" : "fitColumns",
     pagination: false,
     autoColumns: false,
 
@@ -93,15 +93,45 @@ document.addEventListener("DOMContentLoaded", function () {
           return formatPercent(cell.getValue(), 1);
         }
       },
-      { title: "Road", field: "roadTeams" },
+	  {
+	    title: "Road",
+	    field: "roadTeams",
+	    formatter: cell => {
+		  addCellClass(cell, "road_ml_class");
+		  return cell.getValue();
+	    }
+	  },
+	  {
+	    title: "Road ML",
+	    field: "roadML",
+	    formatter: cell => {
+		  addCellClass(cell, "road_ml_class");
+		  return cell.getValue();
+	    }
+	  },
 
-      {
-        title: "O/U",
-        field: "overUnder",
-        formatter: cell => formatNumber(cell.getValue(), 1)
-      },
+	  {
+	    title: "O/U",
+	    field: "overUnder",
+	    formatter: cell => formatNumber(cell.getValue(), 1)
+	  },
 
-      { title: "Home", field: "homeTeams" },
+	  {
+	    title: "Home ML",
+	    field: "homeML",
+	    formatter: cell => {
+		  addCellClass(cell, "home_ml_class");
+		  return cell.getValue();
+	    }
+	  },
+	  {
+	    title: "Home",
+	    field: "homeTeams",
+	    formatter: cell => {
+		  addCellClass(cell, "home_ml_class");
+		  return cell.getValue();
+	    }
+	  },
       {
         title: "SF%",
         field: "home_sf_pct_diff",
