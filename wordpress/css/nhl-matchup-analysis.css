@@ -539,6 +539,7 @@ input[type="date"] {
   }
 }
 
+/*
 .cell-green {
   background: #16a34a !important;
   color: #ffffff !important;
@@ -550,6 +551,9 @@ input[type="date"] {
   color: #ffffff !important;
   font-weight: 700;
 }
+*/
+
+
 
 .cell-red-light {
   background: #fecaca !important;
