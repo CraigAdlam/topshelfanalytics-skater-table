@@ -1,3 +1,5 @@
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+
 <div id="tsa-team-trends-wrap" class="tsa-team-trends-page">
 
   <nav class="tsa-data-tabs" aria-label="Top Shelf Analytics analysis pages">
@@ -39,12 +41,20 @@
     <h2>Team Shot Trends</h2>
 
     <div class="tsa-controls-grid tsa-team-trends-controls">
-      <div class="tsa-field">
-        <label for="tsa-trend-team">Team</label>
-        <select id="tsa-trend-team">
-          <option value="">Loading teams...</option>
-        </select>
-      </div>
+	  <div class="tsa-field">
+	    <label for="tsa-trend-team">Teams</label>
+	    <select id="tsa-trend-team" multiple size="5">
+		  <option value="">Loading teams...</option>
+	    </select>
+	  </div>
+	  
+	  <div class="tsa-field">
+	    <label for="tsa-trend-metric">Metric</label>
+	    <select id="tsa-trend-metric">
+		  <option value="sf_pct_diff">SF%</option>
+		  <option value="sa_pct_diff">SA%</option>
+	    </select>
+	  </div>
 
       <div class="tsa-field">
         <label for="tsa-trend-split">Location Split</label>
@@ -63,3 +73,4 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>

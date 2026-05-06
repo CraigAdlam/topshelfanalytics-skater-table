@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
   const statusBox = document.getElementById("tsa-team-trends-status");
   const trendTeamSelect = document.getElementById("tsa-trend-team");
+  const trendMetricSelect = document.getElementById("tsa-trend-metric");
   const trendSplitSelect = document.getElementById("tsa-trend-split");
   const trendCanvas = document.getElementById("tsa-team-trend-chart");
 
   let trendChart = null;
   let trendRows = [];
+  let trendTeamTomSelect = null;
 
   function setStatus(message, type = "loading") {
     if (!statusBox) return;
@@ -47,7 +49,25 @@ document.addEventListener("DOMContentLoaded", function () {
       trendTeamSelect.appendChild(option);
     });
 
-    trendTeamSelect.value = teams[0];
+	if (trendTeamTomSelect) {
+	  trendTeamTomSelect.destroy();
+	}
+
+	trendTeamTomSelect = new TomSelect("#tsa-trend-team", {
+	  plugins: ["remove_button"],
+	  maxItems: 5,
+	  persist: false,
+	  create: false,
+	  placeholder: "Select teams..."
+	});
+
+	trendTeamTomSelect.setValue(teams.slice(0, 5));
+  }
+  
+  function getSelectedTeams() {
+    if (!trendTeamTomSelect) return [];
+
+    return trendTeamTomSelect.getValue().slice(0, 5);
   }
 
   function buildTrendChart() {
@@ -55,37 +75,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     trendChart = new Chart(trendCanvas, {
       type: "line",
-      data: {
-        labels: [],
-        datasets: [
-          {
-            label: "SF%",
-            data: [],
-            borderWidth: 2,
-            tension: 0.25,
-            pointRadius: 3,
-            pointHoverRadius: 5
-          },
-          {
-            label: "SA%",
-            data: [],
-            borderWidth: 2,
-            tension: 0.25,
-            pointRadius: 3,
-            pointHoverRadius: 5
-          },
-          {
-            label: "Net",
-            data: [],
-            borderWidth: 2,
-            tension: 0.25,
-            pointRadius: 3,
-            pointHoverRadius: 5,
-            hidden: true,
-            yAxisID: "yNet"
-          }
-        ]
-      },
+	  data: {
+	    labels: [],
+	    datasets: []
+	  },
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -101,17 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
             title: {
               display: true,
               text: "SF% / SA% Difference vs League Average"
-            }
-          },
-          yNet: {
-            position: "right",
-            display: false,
-            grid: {
-              drawOnChartArea: false
-            },
-            title: {
-              display: true,
-              text: "Net Shot Differential"
             }
           },
           x: {
@@ -131,10 +113,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const label = context.dataset.label || "";
                 const value = context.parsed.y;
 
-                if (label === "Net") {
-                  return label + ": " + value.toFixed(2);
-                }
-
                 return label + ": " + value.toFixed(1) + "%";
               }
             }
@@ -145,35 +123,52 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function updateTrendChart() {
-    if (!trendChart || !trendTeamSelect || !trendSplitSelect) return;
+    if (!trendChart || !trendTeamSelect || !trendMetricSelect || !trendSplitSelect) return;
 
-    const selectedTeam = trendTeamSelect.value;
+    const selectedTeams = getSelectedTeams();
+    const selectedMetric = trendMetricSelect.value;
     const selectedSplit = trendSplitSelect.value;
 
-    const rows = trendRows
-      .filter(row =>
-        row.teamAbbrev === selectedTeam &&
-        row.homeRoad === selectedSplit
-      )
+    const metricLabel = selectedMetric === "sf_pct_diff" ? "SF%" : "SA%";
+
+    const rowsForSplit = trendRows
+      .filter(row => row.homeRoad === selectedSplit)
       .sort((a, b) => normalizeDate(a.predictionDate).localeCompare(normalizeDate(b.predictionDate)));
 
-    trendChart.data.labels = rows.map(row => normalizeDate(row.predictionDate));
-    trendChart.data.datasets[0].data = rows.map(row => percentValue(row.sf_pct_diff));
-    trendChart.data.datasets[1].data = rows.map(row => percentValue(row.sa_pct_diff));
-    trendChart.data.datasets[2].data = rows.map(row => {
-      const num = Number(row.net);
-      return Number.isFinite(num) ? +num.toFixed(2) : null;
+    const labels = [...new Set(rowsForSplit.map(row => normalizeDate(row.predictionDate)))]
+      .filter(Boolean)
+      .sort();
+
+    trendChart.data.labels = labels;
+
+    trendChart.data.datasets = selectedTeams.map(team => {
+      const teamRows = rowsForSplit.filter(row => row.teamAbbrev === team);
+
+      const valueByDate = teamRows.reduce((acc, row) => {
+        acc[normalizeDate(row.predictionDate)] = percentValue(row[selectedMetric]);
+        return acc;
+      }, {});
+
+      return {
+        label: team + " " + metricLabel,
+        data: labels.map(date => valueByDate[date] ?? null),
+        borderWidth: 2,
+        tension: 0.25,
+        pointRadius: 3,
+        pointHoverRadius: 5
+      };
     });
 
     trendChart.update();
 
-    if (rows.length === 0) {
-      setStatus("No trend data available for the selected team and split.", "empty");
+    if (selectedTeams.length === 0) {
+      setStatus("Select at least one team to display trend data.", "empty");
     } else {
       setStatus(
-        "Showing " + selectedTeam + " " +
+        "Showing " + metricLabel + " trends for " +
+        selectedTeams.join(", ") + " " +
         (selectedSplit === "R" ? "road" : "home") +
-        " trends across " + rows.length + " slate date(s).",
+        " splits across " + labels.length + " slate date(s).",
         "success"
       );
     }
@@ -205,6 +200,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (trendTeamSelect) {
     trendTeamSelect.addEventListener("change", updateTrendChart);
+  }
+
+  if (trendMetricSelect) {
+    trendMetricSelect.addEventListener("change", updateTrendChart);
   }
 
   if (trendSplitSelect) {

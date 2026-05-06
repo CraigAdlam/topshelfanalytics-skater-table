@@ -775,10 +775,11 @@ input[type="date"] {
   }
 
   .tsa-controls-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(170px, 1fr));
   }
 
   .tsa-chart-wrap {
     height: 360px;
   }
+
 }
