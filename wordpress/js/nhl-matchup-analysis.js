@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const statusBox = document.getElementById("tsa-status");
   const lastUpdatedBox = document.getElementById("tsa-last-updated");
+  const slateMetaBox = document.getElementById("tsa-slate-meta");
 
   function setStatus(message, type = "loading") {
     statusBox.textContent = message;
@@ -47,6 +48,18 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .catch(() => {
       lastUpdatedBox.textContent = "Matchup analysis updated: Unavailable";
+    });
+
+  fetch("/wp-content/uploads/tsa-data/reports/matchup_analysis_preview_meta.json")
+    .then(res => res.json())
+    .then(meta => {
+      slateMetaBox.textContent =
+        "Slate: " + meta.predictionDate +
+        " | Team data used: " + meta.teamDataStartDate +
+        " through " + meta.teamDataEndDate;
+    })
+    .catch(() => {
+      slateMetaBox.textContent = "Slate details: Unavailable";
     });
 
   new Tabulator("#tsa-table", {
