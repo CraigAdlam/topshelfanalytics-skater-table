@@ -23,6 +23,9 @@ CREATE TABLE wp_tsa_matchup_analysis_preview (
   roadML INT,
   homeML INT,
 
+  road_ml_class VARCHAR(50),
+  home_ml_class VARCHAR(50),
+
   road_games_in_split INT,
   home_games_in_split INT,
 
@@ -32,6 +35,10 @@ CREATE TABLE wp_tsa_matchup_analysis_preview (
   home_net_class VARCHAR(50),
   home_sf_class VARCHAR(50),
   home_sa_class VARCHAR(50)
+
+  INDEX idx_predictionDate (predictionDate),
+  INDEX idx_predictionDate_sortId (predictionDate, sortId),
+  INDEX idx_gameId (gameId)
 );
 
 DELETE FROM wp_tsa_matchup_analysis_preview

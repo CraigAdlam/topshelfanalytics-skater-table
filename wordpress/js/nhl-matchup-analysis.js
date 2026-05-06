@@ -26,6 +26,10 @@ document.addEventListener("DOMContentLoaded", function () {
       cell.getElement().classList.add(value.trim());
     }
   }
+  
+  const predictionDateSelect = document.getElementById("tsa-prediction-date");
+  
+  let matchupMetaByDate = {};
 
   fetch("/wp-content/uploads/tsa-data/reports/wordpress_matchup_refresh_meta.json")
     .then(res => res.json())
@@ -50,16 +54,33 @@ document.addEventListener("DOMContentLoaded", function () {
       lastUpdatedBox.textContent = "Matchup analysis updated: Unavailable";
     });
 
+  function updateSlateMeta(predictionDate) {
+    const meta = matchupMetaByDate[predictionDate];
+
+    if (!meta) {
+      slateMetaBox.textContent =
+        "Slate: " + predictionDate + " | Team data used: Unavailable";
+      return;
+    }
+
+    slateMetaBox.textContent =
+      "Slate: " + meta.predictionDate +
+	  " | Team data included: " + meta.teamDataStartDate +
+	  " through " + meta.teamDataEndDate;
+  }
+
   fetch("/wp-content/uploads/tsa-data/reports/matchup_analysis_preview_meta.json")
     .then(res => res.json())
     .then(meta => {
-      slateMetaBox.textContent =
-        "Slate: " + meta.predictionDate +
-        " | Team data used: " + meta.teamDataStartDate +
-        " through " + meta.teamDataEndDate;
+      const slates = meta.slates || [];
+
+      matchupMetaByDate = slates.reduce((acc, slate) => {
+        acc[slate.predictionDate] = slate;
+        return acc;
+      }, {});
     })
     .catch(() => {
-      slateMetaBox.textContent = "Slate details: Unavailable";
+      matchupMetaByDate = {};
     });
 
   const matchupTable = new Tabulator("#tsa-table", {
@@ -164,6 +185,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ajaxResponse: function (url, params, response) {
       const data = Array.isArray(response) ? response : response.data || [];
+	  
+	  loadPredictionDateOptions(data);
 
       const total = data.length;
 
@@ -180,6 +203,40 @@ document.addEventListener("DOMContentLoaded", function () {
       setStatus("Failed to load matchup data.", "error");
     }
   });
+  
+  function loadPredictionDateOptions(data) {
+    if (!predictionDateSelect) return;
+
+	const dates = [...new Set(
+	  data.map(row => String(row.predictionDate).slice(0, 10))
+	)]
+      .filter(Boolean)
+      .sort()
+      .reverse();
+
+    predictionDateSelect.innerHTML = "";
+
+    dates.forEach(date => {
+      const option = document.createElement("option");
+      option.value = date;
+      option.textContent = date;
+      predictionDateSelect.appendChild(option);
+    });
+
+    if (dates.length > 0) {
+      predictionDateSelect.value = dates[0];
+      matchupTable.setFilter("predictionDate", "=", dates[0]);
+	  updateSlateMeta(dates[0]);
+    }
+  }
+
+  if (predictionDateSelect) {
+    predictionDateSelect.addEventListener("change", function () {
+      matchupTable.setFilter("predictionDate", "=", this.value);
+      matchupTable.setSort("sortId", "asc");
+	  updateSlateMeta(this.value);
+    });
+  }
 
   const resetSortButton = document.getElementById("tsa-reset-sort");
 
