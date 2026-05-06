@@ -783,3 +783,35 @@ input[type="date"] {
   }
 
 }
+
+
+
+.tsa-inner-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1rem 0;
+}
+
+.tsa-inner-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #1f2937;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tsa-inner-tabs button:hover {
+  background: #e5e7eb;
+}
+
+.tsa-inner-tabs button.active {
+  color: #ffffff;
+  background: #111827;
+  border-color: #111827;
+}

@@ -5,7 +5,7 @@
   <nav class="tsa-data-tabs" aria-label="Top Shelf Analytics analysis pages">
     <a href="/nhl-analysis/">NHL Analysis</a>
     <a href="/nhl-matchup-analysis/">Matchup Analysis</a>
-    <a class="active" href="/nhl-team-trends/">NHL Team Trends</a>
+    <a class="active" href="/nhl-team-analysis/">Team Analysis</a>
   </nav>
 
   <div class="tsa-helper-text">
@@ -40,30 +40,55 @@
   <section class="tsa-chart-card">
     <h2>Team Shot Trends</h2>
 
-    <div class="tsa-controls-grid tsa-team-trends-controls">
+	<div class="tsa-inner-tabs" aria-label="Team trends chart modes">
+	  <button id="tsa-mode-team" class="active" type="button">Team Trends</button>
+	  <button id="tsa-mode-matchup" type="button">Matchup Lens</button>
+	</div>
+
+	<div id="tsa-team-trend-controls" class="tsa-controls-grid tsa-team-trends-controls">
 	  <div class="tsa-field">
-	    <label for="tsa-trend-team">Teams</label>
-	    <select id="tsa-trend-team" multiple size="5">
+		<label for="tsa-trend-team">Teams</label>
+		<select id="tsa-trend-team" multiple>
 		  <option value="">Loading teams...</option>
-	    </select>
-	  </div>
-	  
-	  <div class="tsa-field">
-	    <label for="tsa-trend-metric">Metric</label>
-	    <select id="tsa-trend-metric">
-		  <option value="sf_pct_diff">SF%</option>
-		  <option value="sa_pct_diff">SA%</option>
-	    </select>
+		</select>
 	  </div>
 
-      <div class="tsa-field">
-        <label for="tsa-trend-split">Location Split</label>
-        <select id="tsa-trend-split">
-          <option value="R">Road</option>
-          <option value="H">Home</option>
-        </select>
-      </div>
-    </div>
+	  <div class="tsa-field">
+		<label for="tsa-trend-metric">Metric</label>
+		<select id="tsa-trend-metric">
+		  <option value="sf_pct_diff">SF%</option>
+		  <option value="sa_pct_diff">SA%</option>
+		</select>
+	  </div>
+
+	  <div class="tsa-field">
+		<label for="tsa-trend-split">Location Split</label>
+		<select id="tsa-trend-split">
+		  <option value="R">Road</option>
+		  <option value="H">Home</option>
+		</select>
+	  </div>
+	</div>
+
+	<div id="tsa-matchup-lens-controls" class="tsa-controls-grid tsa-team-trends-controls" style="display: none;">
+	  <div class="tsa-field">
+		<label for="tsa-road-team">Road Team</label>
+		<select id="tsa-road-team"></select>
+	  </div>
+
+	  <div class="tsa-field">
+		<label for="tsa-home-team">Home Team</label>
+		<select id="tsa-home-team"></select>
+	  </div>
+
+	  <div class="tsa-field">
+		<label for="tsa-matchup-lens">Lens</label>
+		<select id="tsa-matchup-lens">
+		  <option value="road">Road Team Shot Outlook</option>
+		  <option value="home">Home Team Shot Outlook</option>
+		</select>
+	  </div>
+	</div>
 
     <div class="tsa-chart-wrap">
       <canvas id="tsa-team-trend-chart"></canvas>

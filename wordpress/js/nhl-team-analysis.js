@@ -8,6 +8,20 @@ document.addEventListener("DOMContentLoaded", function () {
   let trendChart = null;
   let trendRows = [];
   let trendTeamTomSelect = null;
+  let roadTeamTomSelect = null;
+  let homeTeamTomSelect = null;
+  
+  const modeTeamButton = document.getElementById("tsa-mode-team");
+  const modeMatchupButton = document.getElementById("tsa-mode-matchup");
+
+  const teamTrendControls = document.getElementById("tsa-team-trend-controls");
+  const matchupLensControls = document.getElementById("tsa-matchup-lens-controls");
+
+  const roadTeamSelect = document.getElementById("tsa-road-team");
+  const homeTeamSelect = document.getElementById("tsa-home-team");
+  const matchupLensSelect = document.getElementById("tsa-matchup-lens");
+
+  let chartMode = "team";
 
   function setStatus(message, type = "loading") {
     if (!statusBox) return;
@@ -62,6 +76,58 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	trendTeamTomSelect.setValue(teams.slice(0, 5));
+  }
+  
+  function populateMatchupLensTeams(rows) {
+    if (!roadTeamSelect || !homeTeamSelect) return;
+
+    const teams = [...new Set(rows.map(row => row.teamAbbrev))]
+      .filter(Boolean)
+      .sort();
+
+    roadTeamSelect.innerHTML = "";
+    homeTeamSelect.innerHTML = "";
+
+    teams.forEach(team => {
+      const roadOption = document.createElement("option");
+      roadOption.value = team;
+      roadOption.textContent = team;
+      roadTeamSelect.appendChild(roadOption);
+
+      const homeOption = document.createElement("option");
+      homeOption.value = team;
+      homeOption.textContent = team;
+      homeTeamSelect.appendChild(homeOption);
+    });
+
+	if (roadTeamTomSelect) {
+	  roadTeamTomSelect.destroy();
+	}
+
+	if (homeTeamTomSelect) {
+	  homeTeamTomSelect.destroy();
+	}
+
+	roadTeamTomSelect = new TomSelect("#tsa-road-team", {
+	  maxItems: 1,
+	  persist: false,
+	  create: false,
+	  placeholder: "Select road team...",
+	  onChange: updateTrendChart
+	});
+
+	homeTeamTomSelect = new TomSelect("#tsa-home-team", {
+	  maxItems: 1,
+	  persist: false,
+	  create: false,
+	  placeholder: "Select home team...",
+	  onChange: updateTrendChart
+	});
+
+	if (teams.length > 0) {
+	  roadTeamTomSelect.setValue(teams[0]);
+	  homeTeamTomSelect.setValue(teams[1] || teams[0]);
+	}
   }
   
   function getSelectedTeams() {
@@ -122,7 +188,101 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  function updateMatchupLensChart() {
+    if (!trendChart || !roadTeamSelect || !homeTeamSelect || !matchupLensSelect) return;
+
+	const roadTeam = roadTeamTomSelect ? roadTeamTomSelect.getValue() : roadTeamSelect.value;
+	const homeTeam = homeTeamTomSelect ? homeTeamTomSelect.getValue() : homeTeamSelect.value;
+    const lens = matchupLensSelect.value;
+
+    let firstTeam;
+    let firstSplit;
+    let firstMetric;
+    let firstLabel;
+
+    let secondTeam;
+    let secondSplit;
+    let secondMetric;
+    let secondLabel;
+
+    if (lens === "road") {
+      firstTeam = roadTeam;
+      firstSplit = "R";
+      firstMetric = "sf_pct_diff";
+      firstLabel = roadTeam + " Road SF%";
+
+      secondTeam = homeTeam;
+      secondSplit = "H";
+      secondMetric = "sa_pct_diff";
+      secondLabel = homeTeam + " Home SA%";
+    } else {
+      firstTeam = homeTeam;
+      firstSplit = "H";
+      firstMetric = "sf_pct_diff";
+      firstLabel = homeTeam + " Home SF%";
+
+      secondTeam = roadTeam;
+      secondSplit = "R";
+      secondMetric = "sa_pct_diff";
+      secondLabel = roadTeam + " Road SA%";
+    }
+
+    const rowsForPair = trendRows
+      .filter(row =>
+        (row.teamAbbrev === firstTeam && row.homeRoad === firstSplit) ||
+        (row.teamAbbrev === secondTeam && row.homeRoad === secondSplit)
+      )
+      .sort((a, b) => normalizeDate(a.predictionDate).localeCompare(normalizeDate(b.predictionDate)));
+
+    const labels = [...new Set(rowsForPair.map(row => normalizeDate(row.predictionDate)))]
+      .filter(Boolean)
+      .sort();
+
+    function valuesFor(team, split, metric) {
+      const valueByDate = trendRows
+        .filter(row => row.teamAbbrev === team && row.homeRoad === split)
+        .reduce((acc, row) => {
+          acc[normalizeDate(row.predictionDate)] = percentValue(row[metric]);
+          return acc;
+        }, {});
+
+      return labels.map(date => valueByDate[date] ?? null);
+    }
+
+    trendChart.data.labels = labels;
+    trendChart.data.datasets = [
+      {
+        label: firstLabel,
+        data: valuesFor(firstTeam, firstSplit, firstMetric),
+        borderWidth: 2,
+        tension: 0.25,
+        pointRadius: 3,
+        pointHoverRadius: 5
+      },
+      {
+        label: secondLabel,
+        data: valuesFor(secondTeam, secondSplit, secondMetric),
+        borderWidth: 2,
+        tension: 0.25,
+        pointRadius: 3,
+        pointHoverRadius: 5
+      }
+    ];
+
+    trendChart.update();
+
+    setStatus(
+      "Showing " + firstLabel + " vs " + secondLabel +
+      " across " + labels.length + " slate date(s).",
+      "success"
+    );
+  }
+
   function updateTrendChart() {
+	if (chartMode === "matchup") {
+	  updateMatchupLensChart();
+	  return;
+	}
     if (!trendChart || !trendTeamSelect || !trendMetricSelect || !trendSplitSelect) return;
 
     const selectedTeams = getSelectedTeams();
@@ -173,6 +333,28 @@ document.addEventListener("DOMContentLoaded", function () {
       );
     }
   }
+  
+  function setChartMode(mode) {
+    chartMode = mode;
+
+    if (modeTeamButton) {
+      modeTeamButton.classList.toggle("active", mode === "team");
+    }
+
+    if (modeMatchupButton) {
+      modeMatchupButton.classList.toggle("active", mode === "matchup");
+    }
+
+    if (teamTrendControls) {
+      teamTrendControls.style.display = mode === "team" ? "" : "none";
+    }
+
+    if (matchupLensControls) {
+      matchupLensControls.style.display = mode === "matchup" ? "" : "none";
+    }
+
+    updateTrendChart();
+  }
 
   fetch("/wp-json/tsa/v1/matchup-team-trends")
     .then(res => {
@@ -191,6 +373,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       populateTrendTeams(trendRows);
+	  populateMatchupLensTeams(trendRows);
       buildTrendChart();
       updateTrendChart();
     })
@@ -208,5 +391,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (trendSplitSelect) {
     trendSplitSelect.addEventListener("change", updateTrendChart);
+  }
+  if (modeTeamButton) {
+    modeTeamButton.addEventListener("click", function () {
+      setChartMode("team");
+    });
+  }
+
+  if (modeMatchupButton) {
+    modeMatchupButton.addEventListener("click", function () {
+      setChartMode("matchup");
+    });
+  }
+
+  if (matchupLensSelect) {
+    matchupLensSelect.addEventListener("change", updateTrendChart);
   }
 });
