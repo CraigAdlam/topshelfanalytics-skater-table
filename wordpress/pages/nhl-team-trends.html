@@ -1,0 +1,65 @@
+<div id="tsa-team-trends-wrap" class="tsa-team-trends-page">
+
+  <nav class="tsa-data-tabs" aria-label="Top Shelf Analytics analysis pages">
+    <a href="/nhl-analysis/">NHL Analysis</a>
+    <a href="/nhl-matchup-analysis/">Matchup Analysis</a>
+    <a class="active" href="/nhl-team-trends/">NHL Team Trends</a>
+  </nav>
+
+  <div class="tsa-helper-text">
+    NHL team shot trend insights based on road/home performance splits.
+    This preview shows selected regular season slates from the final month of the season,
+    using only team performance data available up until the most recently completed games.
+  </div>
+
+  <details class="tsa-dataset-notes">
+    <summary>Chart Notes</summary>
+
+    <p>
+      SF% reflects how a team’s shots for compare to league average.
+      SA% reflects how a team’s shots against compare to league average.
+    </p>
+
+    <p>
+      Values above 0% indicate the team is above league average for that metric,
+      while values below 0% indicate the team is below league average.
+    </p>
+
+    <p>
+      Use the team and location split filters to compare how a team’s profile changes
+      across available preview slate dates.
+    </p>
+  </details>
+
+  <div id="tsa-team-trends-status" class="tsa-status loading">
+    Loading team trends...
+  </div>
+
+  <section class="tsa-chart-card">
+    <h2>Team Shot Trends</h2>
+
+    <div class="tsa-controls-grid tsa-team-trends-controls">
+      <div class="tsa-field">
+        <label for="tsa-trend-team">Team</label>
+        <select id="tsa-trend-team">
+          <option value="">Loading teams...</option>
+        </select>
+      </div>
+
+      <div class="tsa-field">
+        <label for="tsa-trend-split">Location Split</label>
+        <select id="tsa-trend-split">
+          <option value="R">Road</option>
+          <option value="H">Home</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="tsa-chart-wrap">
+      <canvas id="tsa-team-trend-chart"></canvas>
+    </div>
+  </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

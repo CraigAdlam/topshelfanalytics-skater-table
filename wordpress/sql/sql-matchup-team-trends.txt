@@ -1,0 +1,18 @@
+DROP TABLE IF EXISTS wp_tsa_matchup_team_trends_preview;
+
+CREATE TABLE wp_tsa_matchup_team_trends_preview (
+  predictionDate DATE,
+  teamAbbrev VARCHAR(10),
+  homeRoad VARCHAR(10),
+  sf_pct_diff DECIMAL(10,6),
+  sa_pct_diff DECIMAL(10,6),
+  net DECIMAL(10,4),
+  games_in_split INT,
+
+  INDEX idx_predictionDate (predictionDate),
+  INDEX idx_teamAbbrev (teamAbbrev),
+  INDEX idx_team_split_date (teamAbbrev, homeRoad, predictionDate)
+);
+
+DELETE FROM wp_tsa_matchup_team_trends_preview
+WHERE teamAbbrev = 'teamAbbrev';
