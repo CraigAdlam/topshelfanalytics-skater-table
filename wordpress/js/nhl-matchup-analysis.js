@@ -62,11 +62,15 @@ document.addEventListener("DOMContentLoaded", function () {
       slateMetaBox.textContent = "Slate details: Unavailable";
     });
 
-  new Tabulator("#tsa-table", {
+  const matchupTable = new Tabulator("#tsa-table", {
     ajaxURL: "/wp-json/tsa/v1/matchup-analysis",
     layout: window.innerWidth <= 768 ? "fitDataStretch" : "fitColumns",
     pagination: false,
     autoColumns: false,
+	
+    initialSort: [
+      { column: "sortId", dir: "asc" }
+    ],
 
     columns: [
       {
@@ -176,5 +180,13 @@ document.addEventListener("DOMContentLoaded", function () {
       setStatus("Failed to load matchup data.", "error");
     }
   });
+
+  const resetSortButton = document.getElementById("tsa-reset-sort");
+
+  if (resetSortButton) {
+    resetSortButton.addEventListener("click", function () {
+      matchupTable.setSort("sortId", "asc");
+    });
+  }
 
 });
